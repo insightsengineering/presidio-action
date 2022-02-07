@@ -55,25 +55,25 @@ runs:
     - name: Run presidio-cli with default configuration
       if: (inputs.configuration-data == '' && (inputs.configuration-file == 'default'|| inputs.configuration-file == 'limited'))
       run: |
-        python -m presidio_cli -f "${{ inputs.format-output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.verify-path }}" | tee .presido-output.txt
+        python -m presidio_cli -f "${{ inputs.format-output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.verify-path }}" | tee .presidio-output.txt
       shell: bash
 
     - name: Run presidio-cli with configuration file
       if: (inputs.configuration-data == '' && inputs.configuration-file != 'default' && inputs.configuration-file != 'limited')
       run: |
-        python -m presidio_cli -f "${{ inputs.format-output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.verify-path }}" | tee .presido-output.txt
+        python -m presidio_cli -f "${{ inputs.format-output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.verify-path }}" | tee .presidio-output.txt
       shell: bash
 
     - name: Run presidio-cli with configuration data
       if: (inputs.configuration-data != '')
       run: |
-        python -m presidio_cli -f "${{ inputs.format-output }}" -d ${{ inputs.configuration-data }} "${{ inputs.verify-path }}" | tee .presido-output.txt
+        python -m presidio_cli -f "${{ inputs.format-output }}" -d ${{ inputs.configuration-data }} "${{ inputs.verify-path }}" | tee .presidio-output.txt
       shell: bash
 
     - name: Not found message
       run: |
-        if [[ ! -f .presido-output.txt]]; then
-          echo "No info from presidio-cli" | tee .presido-output.txt
+        if [[ ! -f .presidio-output.txt ]]; then
+          echo "No info from presidio-cli" | tee .presidio-output.txt
         fi
       shell: bash
 
@@ -82,4 +82,4 @@ runs:
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         header: "${{ inputs.path }}-${{ inputs.configuration-file }}"
-        path: .presido-output.txt
+        path: .presidio-output.txt
