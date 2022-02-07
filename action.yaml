@@ -73,9 +73,10 @@ runs:
     - name: Not found message
       run: |
         if [[ -f ".presidio-output.txt" ]]; then
-          echo "Info from presidio-cli" | tee -a .presidio-output.txt
+          cat ".presidio-output.txt"
+          echo "There is info from presidio-cli"
         else
-          echo "No info from presidio-cli" | tee .presidio-output.txt
+          echo "No info from presidio-cli" > ".presidio-output.txt"
         fi
       shell: bash
 
