@@ -35,6 +35,9 @@ jobs:
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
+          - path: "."
+            configuration-file: "limited"
+            configuration-data: ""
 
     steps:
       - name: Checkout repo
