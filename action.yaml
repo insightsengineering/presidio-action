@@ -14,6 +14,14 @@ inputs:
     description: Simple configuration data directly
     required: false
     default: ""
+  format-output:
+    description: Format of output
+    required: false
+    default: "auto"
+  publish:
+    description: Publish result in PR comment
+    required: false
+    default: "true"
   presidio-cli-version:
     description: Presidio cli version
     required: false
@@ -48,30 +56,33 @@ runs:
               configuration-file = ${{ inputs.configuration-file }}
               configuration-data = ${{ inputs.configuration-data }}
             """
-        echo "================ configuration yaml ============================="
-        cat "${GITHUB_ACTION_PATH}/conf/default.yaml"
-        echo "=================  file to test ============================"
-        cat "./fixtures/nothing.txt"
-        echo "==================== end ========================="
+        echo "Install en language models"
         python -m spacy download en_core_web_sm
         python -m spacy download en_core_web_lg
-        python -m presidio_cli -c ${GITHUB_ACTION_PATH}/conf/default.yaml ./fixtures/nothing.txt
       shell: bash
 
     - name: Run presidio-cli with default configuration
       if: (inputs.configuration-data == '' && inputs.configuration-file == 'default')
       run: |
-        python -m presidio_cli -c "${GITHUB_ACTION_PATH}/conf/default.yaml" "${{ inputs.verify-path }}"
+        python -m presidio_cli -f "${{ inputs.format-output }}" -c "${GITHUB_ACTION_PATH}/conf/default.yaml" "${{ inputs.verify-path }}" | tee .presido-output.txt
       shell: bash
 
     - name: Run presidio-cli with configuration file
       if: (inputs.configuration-data == '' && inputs.configuration-file != 'default')
       run: |
-        python -m presidio_cli -c "${{ inputs.configuration-file }}" "${{ inputs.verify-path }}"
+        python -m presidio_cli -f "${{ inputs.format-output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.verify-path }}" | tee .presido-output.txt
       shell: bash
 
     - name: Run presidio-cli with configuration data
       if: (inputs.configuration-data != '')
       run: |
-        python -m presidio_cli -d ${{ inputs.configuration-data }} "${{ inputs.verify-path }}"
+        python -m presidio_cli -f "${{ inputs.format-output }}" -d ${{ inputs.configuration-data }} "${{ inputs.verify-path }}" | tee .presido-output.txt
       shell: bash
+
+
+    - name: Post result as comment to pull reqest
+      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') }}
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: ${{ inputs.path }}
+        path: .presido-output.txt
