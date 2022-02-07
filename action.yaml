@@ -72,12 +72,14 @@ runs:
 
     - name: Not found message
       run: |
-        if [[ ! -f .presidio-output.txt ]]; then
+        if [[ -f ".presidio-output.txt" ]]; then
+          echo "Info from presidio-cli" | tee -a .presidio-output.txt
+        else
           echo "No info from presidio-cli" | tee .presidio-output.txt
         fi
       shell: bash
 
-    - name: Post warnings as comment to pull reqest
+    - name: Post warnings as comment to pull request
       if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') }}
       uses: marocchino/sticky-pull-request-comment@v2
       with:
