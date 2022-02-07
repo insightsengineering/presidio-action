@@ -41,13 +41,16 @@ runs:
     - name: Simple check
       run: |
         python -m presidio-cli --help
+      shell: bash
 
     - name: Run presidio-cli with configuration file
       if: (${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} != "")
       run: |
         python -m presidio_cli -c ${{ inputs.configuration-file }} ${{ inputs.verify-path }}
+      shell: bash
 
     - name: Run presidio-cli with configuration data
       if: (${{ inputs.configuration-data }} != "")
       run: |
         python -m presidio_cli -d ${{ inputs.configuration-data }} ${{ inputs.verify-path }}
+      shell: bash
