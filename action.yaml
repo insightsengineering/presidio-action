@@ -84,5 +84,5 @@ runs:
       if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') }}
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        header: "${{ inputs.path }}-${{ inputs.configuration-file }}"
+        header: "header ${{ inputs.path }}--${{ inputs.configuration-file }}"
         path: .presidio-output.txt
