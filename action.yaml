@@ -42,6 +42,13 @@ runs:
       run: |
         ls -alR .
         python -m presidio_cli --help
+        echo """env vars
+            GITHUB_ACTION_PATH = ${GITHUB_ACTION_PATH}
+            input params:
+              configuration-file = ${{ inputs.configuration-file }}
+              configuration-data = ${{ inputs.configuration-data }}
+            """
+        python -m presidio_cli -c ${GITHUB_ACTION_PATH}/conf/default.yaml ./fixtures/nothing.txt
       shell: bash
 
     - name: Run presidio-cli with default configuration
@@ -53,12 +60,6 @@ runs:
     - name: Run presidio-cli with configuration file
       if: ${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} != "default"
       run: |
-        echo """env vars
-            GITHUB_ACTION_PATH = ${GITHUB_ACTION_PATH}
-            input params:
-              configuration-file = ${{ inputs.configuration-file }}
-              configuration-data = ${{ inputs.configuration-data }}
-            """
         python -m presidio_cli -c ${{ inputs.configuration-file }} ${{ inputs.verify-path }}
       shell: bash
 
