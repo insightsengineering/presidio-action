@@ -1,0 +1,53 @@
+---
+name: "Presidio client - execute analyze action"
+description: "Github Action to execute Presidio framework using presidio_cli"
+inputs:
+  verify-path:
+    description: Path to verify
+    required: false
+    default: "."
+  configuration-file:
+    description: Path to configuration file
+    required: false
+    default: "."
+  configuration-data:
+    description: Simple configuration data directly
+    required: false
+    default: ""
+  presidio-cli-version:
+    description: Presidio cli version
+    required: false
+    default: "0.0.3"
+# branding:
+#  icon: 'arrow-down'
+#  color: 'blue'
+runs:
+  using: composite
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install presidio-cli
+      uses: BSFishy/pip-action@v1
+      with:
+        packages: presidio-cli==${{ inputs.presidio-cli-version }}
+
+    - name: Get branch names
+      id: branch-names
+      uses: tj-actions/branch-names@v5.1
+
+    - name: Simple check
+      run: |
+        python -m presidio-cli --help
+
+    - name: Run presidio-cli with configuration file
+      if: (${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} != "")
+      run: |
+        python -m presidio_cli -c ${{ inputs.configuration-file }} ${{ inputs.verify-path }}
+
+    - name: Run presidio-cli with configuration data
+      if: (${{ inputs.configuration-data }} != "")
+      run: |
+        python -m presidio_cli -d ${{ inputs.configuration-data }} ${{ inputs.verify-path }}
