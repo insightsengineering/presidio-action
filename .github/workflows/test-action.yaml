@@ -18,13 +18,13 @@ jobs:
       matrix:
         reports:
           - path: "nothing.txt"
-            configuration-file: "."
+            configuration-file: "default"
             configuration-data: ""
           - path: "fake_no.txt"
-            configuration-file: "."
+            configuration-file: "default"
             configuration-data: ""
           - path: "3_types.txt"
-            configuration-file: "."
+            configuration-file: "default"
             configuration-data: ""
 
     steps:
