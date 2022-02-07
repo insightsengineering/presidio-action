@@ -38,26 +38,26 @@ runs:
       id: branch-names
       uses: tj-actions/branch-names@v5.1
 
-    - name: Simple check
+    - name: Simple check 🥌
       run: |
         ls -alR .
         python -m presidio_cli --help
       shell: bash
 
     - name: Run presidio-cli with configuration file
-      if: (${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} != ".")
+      if: ${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} != "."
       run: |
         python -m presidio_cli -c ${{ inputs.configuration-file }} ${{ inputs.verify-path }}
       shell: bash
 
     - name: Run presidio-cli with default configuration
-      if: (${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} == ".")
+      if: ${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} == "."
       run: |
         python -m presidio_cli ${{ inputs.verify-path }}
       shell: bash
 
     - name: Run presidio-cli with configuration data
-      if: (${{ inputs.configuration-data }} != "")
+      if: ${{ inputs.configuration-data }} != ""
       run: |
         python -m presidio_cli -d ${{ inputs.configuration-data }} ${{ inputs.verify-path }}
       shell: bash
