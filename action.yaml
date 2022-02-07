@@ -53,7 +53,12 @@ runs:
     - name: Run presidio-cli with configuration file
       if: ${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} != "default"
       run: |
-        echo "input params configuration-file = ${{ inputs.configuration-file }}, configuration-data = ${{ inputs.configuration-data }}"
+        echo """env vars
+            GITHUB_ACTION_PATH = ${GITHUB_ACTION_PATH}
+            input params:
+              configuration-file = ${{ inputs.configuration-file }}
+              configuration-data = ${{ inputs.configuration-data }}
+            """
         python -m presidio_cli -c ${{ inputs.configuration-file }} ${{ inputs.verify-path }}
       shell: bash
 
