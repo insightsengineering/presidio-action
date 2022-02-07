@@ -48,6 +48,11 @@ runs:
               configuration-file = ${{ inputs.configuration-file }}
               configuration-data = ${{ inputs.configuration-data }}
             """
+        echo "================ configuration yaml ============================="
+        cat "${GITHUB_ACTION_PATH}/conf/default.yaml"
+        echo "=================  file to test ============================"
+        cat "./fixtures/nothing.txt"
+        echo "==================== end ========================="
         python -m presidio_cli -c ${GITHUB_ACTION_PATH}/conf/default.yaml ./fixtures/nothing.txt
       shell: bash
 
