@@ -1,0 +1,39 @@
+---
+name: Presidio-cli action test 🧪
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-action:
+    runs-on: ubuntu-latest
+    name: Test action 🎬
+    strategy:
+      fail-fast: false
+      matrix:
+        reports:
+          - path: "nothing.txt"
+            configuration-file: "."
+            configuration-data: ""
+          - path: "fake_no.txt"
+            configuration-file: "."
+            configuration-data: ""
+          - path: "3_types.txt"
+            configuration-file: "."
+            configuration-data: ""
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Run test on ${{ matrix.reports.path }} 🏃‍♀️
+        uses: ./
+        with:
+          verify-path: ./fixtures/${{ matrix.reports.path }}
+          configuration-file: ${{ matrix.reports.configuration-file }}
+          configuration-data: ${{ matrix.reports.configuration-data }}
