@@ -40,7 +40,7 @@ runs:
 
     - name: Simple check
       run: |
-        python -m presidio-cli --help
+        python -m presidio_cli --help
       shell: bash
 
     - name: Run presidio-cli with configuration file
