@@ -53,6 +53,12 @@ jobs:
             configuration-file: "limited"
             configuration-data: ""
             format-output: "parsable"
+          - path: "3_types.txt"
+            configuration-file: ""
+            configuration-data: |
+              entities:
+              - PERSON
+            format-output: "auto"
           - path: "."
             configuration-file: "limited"
             configuration-data: ""

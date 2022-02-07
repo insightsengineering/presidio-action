@@ -70,10 +70,10 @@ runs:
         python -m presidio_cli -f "${{ inputs.format-output }}" -d ${{ inputs.configuration-data }} "${{ inputs.verify-path }}" | tee ./.presidio-output.txt
       shell: bash
 
-    - name: Not found message
+    - name: Issues not found message
       run: |
         if [[ ! -s "./.presidio-output.txt" ]]; then
-          echo "No info from presidio-cli" | tee -a "./.presidio-output.txt"
+          echo "There is nothing from presidio-cli" | tee -a "./.presidio-output.txt"
         fi
       shell: bash
 
@@ -87,5 +87,5 @@ runs:
     - name: Upload report 🔼
       uses: actions/upload-artifact@v2
       with:
-        name: presidio-cli output
+        name: "$presidio-cli output for {{ inputs.path }} in format ${{ inputs.format-output }}"
         path: "./.presidio-output.txt"
