@@ -7,7 +7,7 @@ inputs:
     required: false
     default: "."
   configuration-file:
-    description: Path to configuration file
+    description: Path to configuration file or predefined configuration (default, limited)
     required: false
     default: "default"
   configuration-data:
@@ -45,30 +45,21 @@ runs:
     - name: Get branch names
       id: branch-names
       uses: tj-actions/branch-names@v5.1
-
-    - name: Simple check 🥌
+    
+    - name: Install en language models
       run: |
-        ls -alR .
-        python -m presidio_cli --help
-        echo """env vars
-            GITHUB_ACTION_PATH = ${GITHUB_ACTION_PATH}
-            input params:
-              configuration-file = ${{ inputs.configuration-file }}
-              configuration-data = ${{ inputs.configuration-data }}
-            """
-        echo "Install en language models"
         python -m spacy download en_core_web_sm
         python -m spacy download en_core_web_lg
       shell: bash
 
     - name: Run presidio-cli with default configuration
-      if: (inputs.configuration-data == '' && inputs.configuration-file == 'default')
+      if: (inputs.configuration-data == '' && (inputs.configuration-file == 'default'|| inputs.configuration-file == 'limited'))
       run: |
-        python -m presidio_cli -f "${{ inputs.format-output }}" -c "${GITHUB_ACTION_PATH}/conf/default.yaml" "${{ inputs.verify-path }}" | tee .presido-output.txt
+        python -m presidio_cli -f "${{ inputs.format-output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.verify-path }}" | tee .presido-output.txt
       shell: bash
 
     - name: Run presidio-cli with configuration file
-      if: (inputs.configuration-data == '' && inputs.configuration-file != 'default')
+      if: (inputs.configuration-data == '' && inputs.configuration-file != 'default' && inputs.configuration-file != 'limited')
       run: |
         python -m presidio_cli -f "${{ inputs.format-output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.verify-path }}" | tee .presido-output.txt
       shell: bash
@@ -79,10 +70,16 @@ runs:
         python -m presidio_cli -f "${{ inputs.format-output }}" -d ${{ inputs.configuration-data }} "${{ inputs.verify-path }}" | tee .presido-output.txt
       shell: bash
 
+    - name: Not found message
+      run: |
+        if [[ ! -f .presido-output.txt]]; then
+          echo "No info from presidio-cli" | tee .presido-output.txt
+        fi
+      shell: bash
 
-    - name: Post result as comment to pull reqest
+    - name: Post warnings as comment to pull reqest
       if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') }}
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        header: ${{ inputs.path }}
+        header: ${{ inputs.path - configuration-file }}
         path: .presido-output.txt

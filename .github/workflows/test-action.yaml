@@ -26,6 +26,15 @@ jobs:
           - path: "3_types.txt"
             configuration-file: "default"
             configuration-data: ""
+          - path: "nothing.txt"
+            configuration-file: "limited"
+            configuration-data: ""
+          - path: "fake_no.txt"
+            configuration-file: "limited"
+            configuration-data: ""
+          - path: "3_types.txt"
+            configuration-file: "limited"
+            configuration-data: ""
 
     steps:
       - name: Checkout repo
