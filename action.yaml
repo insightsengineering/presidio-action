@@ -9,7 +9,7 @@ inputs:
   configuration-file:
     description: Path to configuration file
     required: false
-    default: "."
+    default: "default"
   configuration-data:
     description: Simple configuration data directly
     required: false
@@ -44,16 +44,17 @@ runs:
         python -m presidio_cli --help
       shell: bash
 
-    - name: Run presidio-cli with configuration file
-      if: ${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} != "."
+    - name: Run presidio-cli with default configuration
+      if: ${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} == "default"
       run: |
-        python -m presidio_cli -c ${{ inputs.configuration-file }} ${{ inputs.verify-path }}
+        python -m presidio_cli -c ${GITHUB_ACTION_PATH}/conf/default.yaml ${{ inputs.verify-path }}
       shell: bash
 
-    - name: Run presidio-cli with default configuration
-      if: ${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} == "."
+    - name: Run presidio-cli with configuration file
+      if: ${{ inputs.configuration-data }} == "" && ${{ inputs.configuration-file }} != "default"
       run: |
-        python -m presidio_cli ${{ inputs.verify-path }}
+        echo "input params configuration-file = ${{ inputs.configuration-file }}, configuration-data = ${{ inputs.configuration-data }}"
+        python -m presidio_cli -c ${{ inputs.configuration-file }} ${{ inputs.verify-path }}
       shell: bash
 
     - name: Run presidio-cli with configuration data
