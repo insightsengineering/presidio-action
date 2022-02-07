@@ -54,6 +54,7 @@ runs:
         cat "./fixtures/nothing.txt"
         echo "==================== end ========================="
         python -m spacy download en_core_web_sm
+        python -m spacy download en_core_web_lg
         python -m presidio_cli -c ${GITHUB_ACTION_PATH}/conf/default.yaml ./fixtures/nothing.txt
       shell: bash
 
