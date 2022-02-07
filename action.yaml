@@ -53,6 +53,7 @@ runs:
         echo "=================  file to test ============================"
         cat "./fixtures/nothing.txt"
         echo "==================== end ========================="
+        python -m spacy download en
         python -m presidio_cli -c ${GITHUB_ACTION_PATH}/conf/default.yaml ./fixtures/nothing.txt
       shell: bash
 
