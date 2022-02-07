@@ -77,9 +77,15 @@ runs:
         fi
       shell: bash
 
-    - name: Post warnings as comment to pull request
+    - name: Publish warnings as comment to pull request
       if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') }}
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         header: "${{ inputs.path }}-${{ inputs.configuration-file }}-${{ inputs.format-output }}"
         path: ./.presidio-output.txt
+
+    - name: Upload report 🔼
+      uses: actions/upload-artifact@v2
+      with:
+        name: presidio-cli output
+        path: "./.presidio-output.txt"

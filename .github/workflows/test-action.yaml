@@ -56,7 +56,7 @@ jobs:
           - path: "."
             configuration-file: "limited"
             configuration-data: ""
-            format-output: "colored"
+            format-output: "github"
 
     steps:
       - name: Checkout repo
