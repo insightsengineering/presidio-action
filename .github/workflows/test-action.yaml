@@ -20,24 +20,31 @@ jobs:
           - path: "nothing.txt"
             configuration-file: "default"
             configuration-data: ""
+            format-output: "auto"
           - path: "fake_no.txt"
             configuration-file: "default"
             configuration-data: ""
+            format-output: "auto"
           - path: "3_types.txt"
             configuration-file: "default"
             configuration-data: ""
+            format-output: "auto"
           - path: "nothing.txt"
             configuration-file: "limited"
             configuration-data: ""
+            format-output: "parsable"
           - path: "fake_no.txt"
             configuration-file: "limited"
             configuration-data: ""
+            format-output: "standard"
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
+            format-output: "github"
           - path: "."
             configuration-file: "limited"
             configuration-data: ""
+            format-output: "colored"
 
     steps:
       - name: Checkout repo
@@ -49,3 +56,4 @@ jobs:
           verify-path: ./fixtures/${{ matrix.reports.path }}
           configuration-file: ${{ matrix.reports.configuration-file }}
           configuration-data: ${{ matrix.reports.configuration-data }}
+          format-output: ${{ matrix.reports.format-output }}

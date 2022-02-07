@@ -72,11 +72,8 @@ runs:
 
     - name: Not found message
       run: |
-        if [[ -f "./.presidio-output.txt" ]]; then
-          cat "./.presidio-output.txt"
-          echo "There is info from presidio-cli"
-        else
-          echo "No info from presidio-cli" > "./.presidio-output.txt"
+        if [[ ! -s "./.presidio-output.txt" ]]; then
+          echo "No info from presidio-cli" | tee -a "./.presidio-output.txt"
         fi
       shell: bash
 
