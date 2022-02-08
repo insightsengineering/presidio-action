@@ -67,7 +67,7 @@ runs:
     - name: Run presidio-cli with configuration data
       if: (inputs.configuration-data != '')
       run: |
-        python -m presidio_cli -f "${{ inputs.format-output }}" -d ${{ inputs.configuration-data }} "${{ inputs.verify-path }}" | tee ./.presidio-output.txt
+        python -m presidio_cli -f "${{ inputs.format-output }}" -d "${{ inputs.configuration-data }}" "${{ inputs.verify-path }}" | tee ./.presidio-output.txt
       shell: bash
 
     - name: Issues not found message
