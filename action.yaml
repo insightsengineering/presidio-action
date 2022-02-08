@@ -30,9 +30,9 @@ inputs:
     description: Presidio cli version
     required: false
     default: "0.0.3"
-# branding:
-#  icon: 'arrow-down'
-#  color: 'blue'
+ branding:
+  icon: 'alert-circle'
+  color: 'yellow'
 runs:
   using: composite
   steps:
