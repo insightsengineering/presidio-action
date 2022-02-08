@@ -48,6 +48,14 @@ Insights Engineering
 
     _Default_: "true"
 
+* `upload`:
+
+    _Description_: Upload result as an artifact
+
+    _Required_: `false`
+
+    _Default_: "true"
+
 * `presidio-cli-version`:
 
     _Description_: Presidio cli version - version of presidio-cli used in action

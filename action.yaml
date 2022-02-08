@@ -22,6 +22,10 @@ inputs:
     description: Publish result in PR comment
     required: false
     default: "true"
+  upload:
+    description: Uploads as artifact
+    required: false
+    default: "true"
   presidio-cli-version:
     description: Presidio cli version
     required: false
@@ -85,7 +89,8 @@ runs:
         path: ./.presidio-output.txt
 
     - name: Upload report 🔼
+      if: ${{ github.event_name == 'pull_request' && contains(inputs.upload, 'true') }}
       uses: actions/upload-artifact@v2
       with:
-        name: "presidio-cli output for ${{ inputs.verify-path }} in format ${{ inputs.format-output }}"
+        name: "presidio-cli output in format ${{ inputs.format-output }}"
         path: "./.presidio-output.txt"
