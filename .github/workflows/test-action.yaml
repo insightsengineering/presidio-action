@@ -54,10 +54,10 @@ jobs:
             configuration-data: ""
             format-output: "parsable"
           - path: "3_types.txt"
-            configuration-file: ""
-            configuration-data: "
+            configuration-file: "ignored-use-data-content"
+            configuration-data: |2
               entities:
-              - PERSON"
+                - PERSON
             format-output: "auto"
           - path: "."
             configuration-file: "limited"
