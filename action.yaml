@@ -87,5 +87,5 @@ runs:
     - name: Upload report 🔼
       uses: actions/upload-artifact@v2
       with:
-        name: "$presidio-cli output for {{ inputs.path }} in format ${{ inputs.format-output }}"
+        name: "presidio-cli output for ${{ inputs.verify-path }} in format ${{ inputs.format-output }}"
         path: "./.presidio-output.txt"
