@@ -55,9 +55,9 @@ jobs:
             format-output: "parsable"
           - path: "3_types.txt"
             configuration-file: ""
-            configuration-data: |
+            configuration-data: "
               entities:
-              - PERSON
+              - PERSON"
             format-output: "auto"
           - path: "."
             configuration-file: "limited"
