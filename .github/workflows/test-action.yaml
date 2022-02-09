@@ -31,7 +31,7 @@ jobs:
             configuration-file: "default"
             configuration-data: ""
             output: "auto"
-            lang-models: """
+            lang-models: ""
           - path: "nothing.txt"
             configuration-file: "limited"
             configuration-data: ""
@@ -83,8 +83,8 @@ jobs:
                 - PERSON
             output: "parsable"
             lang-models: |
-              "pl_core_news_sm"
-              "pl_core_news_lg"
+              pl_core_news_sm
+              pl_core_news_lg
 
     steps:
       - name: Checkout repo
