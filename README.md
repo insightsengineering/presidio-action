@@ -66,7 +66,7 @@ Insights Engineering
 
 ## Outputs
 
-Output depends from `format-output` parameter:
+An output depends on the `format-output` parameter:
 
 The default format is `auto`.
 
