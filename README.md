@@ -108,7 +108,7 @@ Presidio action uses [presidio-cli](https://pypi.org/project/presidio-cli/)
 based on presidio-analyzer from [Microsoft Presidio framework](https://github.com/microsoft/presidio)
 to check code agains unwanted types of data like 'EMAIL_ADDRESS', 'PHONE_NUMBER' inside application code.
 
-Full list of [supported entities](https://microsoft.github.io/presidio/supported_entities/)
+For more information please see a full [list of supported entities](https://microsoft.github.io/presidio/supported_entities/).
 
 ## Usage
 
