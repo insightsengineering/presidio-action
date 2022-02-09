@@ -140,7 +140,7 @@ jobs:
         # all parameters below are optional
         with:
           # path to project.
-          # if project cannot is in specific 'my-project' path,
+          # if project does not have a specific 'my-project' path,
           # '.' - current folder is a default value
           path: "my-project"
           # configuration-file - path to file with specific configuration
