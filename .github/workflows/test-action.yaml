@@ -21,66 +21,92 @@ jobs:
             configuration-file: "default"
             configuration-data: ""
             output: "auto"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "fake_no.txt"
             configuration-file: "default"
             configuration-data: ""
             output: "auto"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "3_types.txt"
             configuration-file: "default"
             configuration-data: ""
             output: "auto"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "nothing.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "auto"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "fake_no.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "auto"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "standard"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "github"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "colored"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "parsable"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "3_types.txt"
             configuration-file: "ignored-use-data-content"
             configuration-data: |2
               entities:
                 - PERSON
             output: "auto"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "."
             configuration-file: "limited"
             configuration-data: ""
             output: "github"
-            lang-models: "en"
+            lang-models: |
+              en_core_web_sm
+              en_core_web_lg
           - path: "fake_no.txt"
-            configuration-file: "default"
-            configuration-data: ""
+            configuration-file: "none"
+            configuration-data: |2
+              language: pl
+              entities:
+                - CREDIT_CARD
+                - PERSON
             output: "parsable"
             lang-models: |
-              "en"
-              "es"
+              "pl_core_news_sm"
+              "pl_core_news_lg"
 
     steps:
       - name: Checkout repo
