@@ -77,7 +77,7 @@ jobs:
           - path: "fake_no.txt"
             configuration-file: "none"
             configuration-data: |2
-              language: pl
+              locale: pl_PL.UTF-8
               entities:
                 - CREDIT_CARD
                 - PERSON
