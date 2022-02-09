@@ -31,11 +31,9 @@ inputs:
     required: false
     default: "0.0.4"
   lang-models:
-    description: List of lang models to install
+    description: List of additional lang models to install
     require: false
-    default: |
-      en_core_web_sm
-      en_core_web_lg
+    default: ""
   branding:
     icon: 'alert-circle'
     color: 'yellow'
@@ -58,10 +56,12 @@ runs:
 
     - name: Install en language models
       run: |
-        echo "${{ inputs.lang-models }}"
+        echo "install required models "
+        python -m spacy download en_core_web_sm
+        python -m spacy download en_core_web_lg
+        echo "install additional models"
         while IFS= read -r lang_model
         do
-          echo "lang = $lang"
           if [[ ! -z "${lang_model}" ]]; then
             python -m spacy download "${lang_model}"
           fi

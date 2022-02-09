@@ -21,81 +21,59 @@ jobs:
             configuration-file: "default"
             configuration-data: ""
             output: "auto"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: ""
           - path: "fake_no.txt"
             configuration-file: "default"
             configuration-data: ""
             output: "auto"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: ""
           - path: "3_types.txt"
             configuration-file: "default"
             configuration-data: ""
             output: "auto"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: """
           - path: "nothing.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "auto"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: ""
           - path: "fake_no.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "auto"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: ""
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "standard"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: ""
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "github"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: ""
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "colored"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: ""
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
             output: "parsable"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: ""
           - path: "3_types.txt"
             configuration-file: "ignored-use-data-content"
             configuration-data: |2
               entities:
                 - PERSON
             output: "auto"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: ""
           - path: "."
             configuration-file: "limited"
             configuration-data: ""
             output: "github"
-            lang-models: |
-              en_core_web_sm
-              en_core_web_lg
+            lang-models: ""
           - path: "fake_no.txt"
             configuration-file: "none"
             configuration-data: |2
