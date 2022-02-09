@@ -2,7 +2,7 @@
 name: "Presidio client - execute analyze action"
 description: "Github Action to execute Presidio framework using presidio_cli"
 inputs:
-  verify-path:
+  path:
     description: Path to verify
     required: false
     default: "."
@@ -14,7 +14,7 @@ inputs:
     description: Simple configuration data directly
     required: false
     default: ""
-  format-output:
+  output:
     description: Format of output
     required: false
     default: "auto"
@@ -29,7 +29,7 @@ inputs:
   presidio-cli-version:
     description: Presidio cli version
     required: false
-    default: "0.0.3"
+    default: "0.0.4"
   branding:
     icon: 'alert-circle'
     color: 'yellow'
@@ -59,19 +59,19 @@ runs:
     - name: Run presidio-cli with default configuration
       if: (inputs.configuration-data == '' && (inputs.configuration-file == 'default'|| inputs.configuration-file == 'limited'))
       run: |
-        python -m presidio_cli -f "${{ inputs.format-output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.verify-path }}" | tee ./.presidio-output.txt
+        python -m presidio_cli -f "${{ inputs.output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
     - name: Run presidio-cli with configuration file
       if: (inputs.configuration-data == '' && inputs.configuration-file != 'default' && inputs.configuration-file != 'limited')
       run: |
-        python -m presidio_cli -f "${{ inputs.format-output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.verify-path }}" | tee ./.presidio-output.txt
+        python -m presidio_cli -f "${{ inputs.output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
     - name: Run presidio-cli with configuration data
       if: (inputs.configuration-data != '')
       run: |
-        python -m presidio_cli -f "${{ inputs.format-output }}" -d "${{ inputs.configuration-data }}" "${{ inputs.verify-path }}" | tee ./.presidio-output.txt
+        python -m presidio_cli -f "${{ inputs.output }}" -d "${{ inputs.configuration-data }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
     - name: Issues not found message
@@ -85,12 +85,12 @@ runs:
       if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') }}
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        header: "${{ inputs.path }}-${{ inputs.configuration-file }}-${{ inputs.format-output }}"
+        header: "${{ inputs.path }}-${{ inputs.configuration-file }}-${{ inputs.output }}"
         path: ./.presidio-output.txt
 
     - name: Upload report 🔼
       if: ${{ github.event_name == 'pull_request' && contains(inputs.upload, 'true') }}
       uses: actions/upload-artifact@v2
       with:
-        name: "presidio-cli output in format ${{ inputs.format-output }}"
+        name: "presidio-cli output in format ${{ inputs.output }}"
         path: "./.presidio-output.txt"

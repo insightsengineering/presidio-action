@@ -20,49 +20,49 @@ jobs:
           - path: "nothing.txt"
             configuration-file: "default"
             configuration-data: ""
-            format-output: "auto"
+            output: "auto"
           - path: "fake_no.txt"
             configuration-file: "default"
             configuration-data: ""
-            format-output: "auto"
+            output: "auto"
           - path: "3_types.txt"
             configuration-file: "default"
             configuration-data: ""
-            format-output: "auto"
+            output: "auto"
           - path: "nothing.txt"
             configuration-file: "limited"
             configuration-data: ""
-            format-output: "auto"
+            output: "auto"
           - path: "fake_no.txt"
             configuration-file: "limited"
             configuration-data: ""
-            format-output: "auto"
+            output: "auto"
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
-            format-output: "standard"
+            output: "standard"
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
-            format-output: "github"
+            output: "github"
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
-            format-output: "colored"
+            output: "colored"
           - path: "3_types.txt"
             configuration-file: "limited"
             configuration-data: ""
-            format-output: "parsable"
+            output: "parsable"
           - path: "3_types.txt"
             configuration-file: "ignored-use-data-content"
             configuration-data: |2
               entities:
                 - PERSON
-            format-output: "auto"
+            output: "auto"
           - path: "."
             configuration-file: "limited"
             configuration-data: ""
-            format-output: "github"
+            output: "github"
 
     steps:
       - name: Checkout repo
@@ -71,7 +71,7 @@ jobs:
       - name: Run test on ${{ matrix.reports.path }} 🏃‍♀️
         uses: ./
         with:
-          verify-path: ./fixtures/${{ matrix.reports.path }}
+          path: ./fixtures/${{ matrix.reports.path }}
           configuration-file: ${{ matrix.reports.configuration-file }}
           configuration-data: ${{ matrix.reports.configuration-data }}
-          format-output: ${{ matrix.reports.format-output }}
+          output: ${{ matrix.reports.output }}
