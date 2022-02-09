@@ -34,7 +34,7 @@ Insights Engineering
 
 * `format-output`:
 
-    _Description_: Format of output
+    _Description_: Format of an output
 
     _Required_: `false`
 
