@@ -27,7 +27,7 @@ inputs:
     required: false
     default: "true"
   presidio-cli-version:
-    description: Presidio cli version
+    description: Presidio CLI version
     required: false
     default: "0.0.4"
   branding:
