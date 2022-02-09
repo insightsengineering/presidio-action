@@ -58,7 +58,7 @@ Insights Engineering
 
 * `presidio-cli-version`:
 
-    _Description_: Presidio cli version - version of presidio-cli used in action
+    _Description_: Presidio cli version - a version of presidio-cli used in action.
 
     _Required_: `false`
 
