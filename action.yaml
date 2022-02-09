@@ -34,8 +34,8 @@ inputs:
     description: List of lang models to install
     require: false
     default: |
-      - en
-      - es
+      "en"
+      "es"
   branding:
     icon: 'alert-circle'
     color: 'yellow'
@@ -59,8 +59,12 @@ runs:
     - name: Install en language models
       run: |
         echo "${{ inputs.lang-models }}"
-        python -m spacy download en_core_web_sm
-        python -m spacy download en_core_web_lg
+        while IFS= read -r lang
+        do
+          echo "lang = $lang"
+          python -m spacy download "${lang}_core_web_sm"
+          python -m spacy download "${lang}_core_web_lg"
+        done <<< "${{ inputs.lang-models }}"
       shell: bash
 
     - name: Run presidio with default configuration
