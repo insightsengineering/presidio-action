@@ -1,6 +1,6 @@
 ---
 name: "Presidio Action"
-description: "Github Action to execute Presidio framework using presidio_cli"
+description: "Github Action to execute PII checks using the Presidio CLI"
 inputs:
   verify-path:
     description: Path to verify
