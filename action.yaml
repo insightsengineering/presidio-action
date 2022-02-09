@@ -1,5 +1,5 @@
 ---
-name: "Presidio client - execute analyze action"
+name: "Presidio Action"
 description: "Github Action to execute Presidio framework using presidio_cli"
 inputs:
   verify-path:
