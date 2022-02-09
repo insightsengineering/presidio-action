@@ -1,4 +1,4 @@
-# presidio-action
+# Presidio Action
 
 Github Actions that analyze Text for PII Entities with Microsoft Presidio framework.
 
@@ -34,7 +34,7 @@ Insights Engineering
 
 * `format-output`:
 
-    _Description_: Format of output
+    _Description_: Format of an output
 
     _Required_: `false`
 
@@ -58,7 +58,7 @@ Insights Engineering
 
 * `presidio-cli-version`:
 
-    _Description_: Presidio cli version - version of presidio-cli used in action
+    _Description_: Presidio cli version - a version of presidio-cli used in action.
 
     _Required_: `false`
 
@@ -66,7 +66,7 @@ Insights Engineering
 
 ## Outputs
 
-Output depends from `format-output` parameter:
+An output depends on the `format-output` parameter:
 
 The default format is `auto`.
 
@@ -108,7 +108,7 @@ Presidio action uses [presidio-cli](https://pypi.org/project/presidio-cli/)
 based on presidio-analyzer from [Microsoft Presidio framework](https://github.com/microsoft/presidio)
 to check code agains unwanted types of data like 'EMAIL_ADDRESS', 'PHONE_NUMBER' inside application code.
 
-Full list of [supported entities](https://microsoft.github.io/presidio/supported_entities/)
+For more information please see a full [list of supported entities](https://microsoft.github.io/presidio/supported_entities/).
 
 ## Usage
 
