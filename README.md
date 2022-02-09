@@ -8,7 +8,7 @@ Insights Engineering
 
 ## Inputs
 
-* `verify-path`:
+* `path`:
 
     _Description_: Path to verify
 
@@ -32,7 +32,7 @@ Insights Engineering
 
     _Default_: ""
 
-* `format-output`:
+* `output`:
 
     _Description_: Format of an output
 
@@ -66,7 +66,7 @@ Insights Engineering
 
 ## Outputs
 
-An output depends on the `format-output` parameter:
+An output depends on the `output` parameter:
 
 The default format is `auto`.
 
@@ -116,7 +116,7 @@ Example usage:
 
 ```yaml
 ---
-name: Presidio-cli
+name: Presidio check
 
 on:
   push:
@@ -127,9 +127,9 @@ on:
       - main
 
 jobs:
-  presidio-cli-action:
+  presidio-action:
     runs-on: ubuntu-latest
-    name: Presidio-cli check
+    name: Presidio check
 
     steps:
       - name: Checkout Code
@@ -156,7 +156,7 @@ jobs:
           configuration-data: |
             entities:
               - PERSON
-          # format-output - specify one of output formats
-          format-output: "parsable"
+          # output - specify one of output formats
+          output: "parsable"
 
 ```

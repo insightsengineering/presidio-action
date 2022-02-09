@@ -30,6 +30,12 @@ inputs:
     description: Presidio CLI version
     required: false
     default: "0.0.4"
+  lang-models:
+    description: List of lang models to install
+    require: false
+    default: |
+      - en
+      - es
   branding:
     icon: 'alert-circle'
     color: 'yellow'
@@ -52,6 +58,7 @@ runs:
 
     - name: Install en language models
       run: |
+        echo "${{ inputs.lang-models }}"
         python -m spacy download en_core_web_sm
         python -m spacy download en_core_web_lg
       shell: bash
