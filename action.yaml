@@ -62,7 +62,9 @@ runs:
         while IFS= read -r lang_model
         do
           echo "lang = $lang"
-          python -m spacy download "${lang_model}"
+          if [[ ! -z "${lang_model}" ]]; then
+            python -m spacy download "${lang_model}"
+          fi
         done <<< "${{ inputs.lang-models }}"
       shell: bash
 
