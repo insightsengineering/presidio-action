@@ -56,28 +56,28 @@ runs:
         python -m spacy download en_core_web_lg
       shell: bash
 
-    - name: Run presidio-cli with default configuration
+    - name: Run presidio with default configuration
       if: (inputs.configuration-data == '' && (inputs.configuration-file == 'default'|| inputs.configuration-file == 'limited'))
       run: |
-        python -m presidio_cli -f "${{ inputs.output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.path }}" | tee ./.presidio-output.txt
+        presidio -f "${{ inputs.output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
-    - name: Run presidio-cli with configuration file
+    - name: Run presidio with configuration file
       if: (inputs.configuration-data == '' && inputs.configuration-file != 'default' && inputs.configuration-file != 'limited')
       run: |
-        python -m presidio_cli -f "${{ inputs.output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
+        presidio -f "${{ inputs.output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
-    - name: Run presidio-cli with configuration data
+    - name: Run presidio with configuration data
       if: (inputs.configuration-data != '')
       run: |
-        python -m presidio_cli -f "${{ inputs.output }}" -d "${{ inputs.configuration-data }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
+        presidio -f "${{ inputs.output }}" -d "${{ inputs.configuration-data }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
     - name: Issues not found message
       run: |
         if [[ ! -s "./.presidio-output.txt" ]]; then
-          echo "There is nothing from presidio-cli" | tee -a "./.presidio-output.txt"
+          echo "There is nothing from presidio check" | tee -a "./.presidio-output.txt"
         fi
       shell: bash
 
