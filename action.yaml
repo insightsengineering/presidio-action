@@ -1,6 +1,9 @@
 ---
 name: "Presidio Action"
 description: "Github Action to execute PII checks using the Presidio CLI"
+branding:
+  icon: 'alert-circle'
+  color: 'yellow'
 inputs:
   path:
     description: Path to verify
@@ -34,9 +37,7 @@ inputs:
     description: List of additional lang models to install
     require: false
     default: ""
-  branding:
-    icon: 'alert-circle'
-    color: 'yellow'
+
 runs:
   using: composite
   steps:
