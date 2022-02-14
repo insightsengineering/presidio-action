@@ -1,0 +1,117 @@
+---
+name: "Presidio Action"
+description: "Github Action to execute PII checks using the Presidio CLI"
+branding:
+  icon: 'alert-circle'
+  color: 'yellow'
+inputs:
+  path:
+    description: Path to verify
+    required: false
+    default: "."
+  configuration-file:
+    description: Path to configuration file or predefined configuration (default, limited)
+    required: false
+    default: "default"
+  configuration-data:
+    description: Simple configuration data directly
+    required: false
+    default: ""
+  output:
+    description: Format of output
+    required: false
+    default: "auto"
+  publish:
+    description: Publish result in PR comment
+    required: false
+    default: "true"
+  upload:
+    description: Uploads as artifact
+    required: false
+    default: "true"
+  presidio-cli-version:
+    description: Presidio CLI version
+    required: false
+    default: "0.0.4"
+  lang-models:
+    description: List of additional lang models to install
+    require: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: cache 
+      uses: actions/cache@v2
+      with:
+        path: |
+          '~/.cache/pip'
+          '~/.local/share/virtualenvs'
+        key: ${{ runner.os }}-presidio-cli-${{ inputs.presidio-cli-version }}-main
+
+    - name: Install presidio-cli
+      uses: BSFishy/pip-action@v1
+      with:
+        packages: presidio-cli==${{ inputs.presidio-cli-version }}
+
+    - name: Get branch names
+      id: branch-names
+      uses: tj-actions/branch-names@v5.1
+
+    - name: Install en language models
+      run: |
+        echo "install required models "
+        # python -m spacy download en_core_web_sm
+        python -m spacy download en_core_web_lg
+        echo "install additional models"
+        while IFS= read -r lang_model
+        do
+          if [[ ! -z "${lang_model}" ]]; then
+            python -m spacy download "${lang_model}"
+          fi
+        done <<< "${{ inputs.lang-models }}"
+      shell: bash
+
+    - name: Run presidio with default configuration
+      if: (inputs.configuration-data == '' && (inputs.configuration-file == 'default'|| inputs.configuration-file == 'limited'))
+      run: |
+        presidio -f "${{ inputs.output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.path }}" | tee ./.presidio-output.txt
+      shell: bash
+
+    - name: Run presidio with configuration file
+      if: (inputs.configuration-data == '' && inputs.configuration-file != 'default' && inputs.configuration-file != 'limited')
+      run: |
+        presidio -f "${{ inputs.output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
+      shell: bash
+
+    - name: Run presidio with configuration data
+      if: (inputs.configuration-data != '')
+      run: |
+        presidio -f "${{ inputs.output }}" -d "${{ inputs.configuration-data }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
+      shell: bash
+
+    - name: Issues not found message
+      run: |
+        if [[ ! -s "./.presidio-output.txt" ]]; then
+          echo "There is nothing from presidio check" | tee -a "./.presidio-output.txt"
+        fi
+      shell: bash
+
+    - name: Publish warnings as comment to pull request
+      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') }}
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: "${{ inputs.path }}-${{ inputs.configuration-file }}-${{ inputs.output }}"
+        path: ./.presidio-output.txt
+
+    - name: Upload report 🔼
+      if: ${{ github.event_name == 'pull_request' && contains(inputs.upload, 'true') }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: "presidio-cli output in format ${{ inputs.output }}"
+        path: "./.presidio-output.txt"

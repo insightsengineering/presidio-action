@@ -1,0 +1,100 @@
+---
+name: Test 🧪
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-action:
+    runs-on: ubuntu-latest
+    name: Test action 🎬
+    strategy:
+      fail-fast: false
+      matrix:
+        reports:
+          - path: "nothing.txt"
+            configuration-file: "default"
+            configuration-data: ""
+            output: "auto"
+            lang-models: ""
+          - path: "fake_no.txt"
+            configuration-file: "default"
+            configuration-data: ""
+            output: "auto"
+            lang-models: ""
+          - path: "3_types.txt"
+            configuration-file: "default"
+            configuration-data: ""
+            output: "auto"
+            lang-models: ""
+          - path: "nothing.txt"
+            configuration-file: "limited"
+            configuration-data: ""
+            output: "auto"
+            lang-models: ""
+          - path: "fake_no.txt"
+            configuration-file: "limited"
+            configuration-data: ""
+            output: "auto"
+            lang-models: ""
+          - path: "3_types.txt"
+            configuration-file: "limited"
+            configuration-data: ""
+            output: "standard"
+            lang-models: ""
+          - path: "3_types.txt"
+            configuration-file: "limited"
+            configuration-data: ""
+            output: "github"
+            lang-models: ""
+          - path: "3_types.txt"
+            configuration-file: "limited"
+            configuration-data: ""
+            output: "colored"
+            lang-models: ""
+          - path: "3_types.txt"
+            configuration-file: "limited"
+            configuration-data: ""
+            output: "parsable"
+            lang-models: ""
+          - path: "3_types.txt"
+            configuration-file: "ignored-use-data-content"
+            configuration-data: |2
+              entities:
+                - PERSON
+            output: "auto"
+            lang-models: ""
+          - path: "."
+            configuration-file: "limited"
+            configuration-data: ""
+            output: "github"
+            lang-models: ""
+          - path: "fake_no.txt"
+            configuration-file: "none"
+            configuration-data: |2
+              language: en
+              entities:
+                - CREDIT_CARD
+                - PERSON
+            output: "parsable"
+            lang-models: |
+              pl_core_news_sm
+              pl_core_news_lg
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Run test on ${{ matrix.reports.path }} 🏃‍♀️
+        uses: ./
+        with:
+          path: ./fixtures/${{ matrix.reports.path }}
+          configuration-file: ${{ matrix.reports.configuration-file }}
+          configuration-data: ${{ matrix.reports.configuration-data }}
+          output: ${{ matrix.reports.output }}
+          lang-models: ${{ matrix.reports.lang-models }}
