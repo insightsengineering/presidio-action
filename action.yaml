@@ -98,6 +98,7 @@ runs:
 
     
     - name: Beautify comment message 🧨
+      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.format, 'standard') }}
       run: |
         echo """
         PII check result:
@@ -109,15 +110,15 @@ runs:
       shell: bash
 
     - name: Publish warnings as comment to pull request
-      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') }}
+      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.format, 'standard') }}
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         header: "${{ inputs.path }}-${{ inputs.configuration-file }}-${{ inputs.output }}"
-        path: ./.presidio-output.txt
+        path: "./.presidio-output-comment.txt"
 
     - name: Upload report 🔼
       if: ${{ github.event_name == 'pull_request' && contains(inputs.upload, 'true') }}
       uses: actions/upload-artifact@v2
       with:
         name: "presidio-cli output in format ${{ inputs.output }}"
-        path: "./.presidio-output-comment.txt"
+        path: "./.presidio-output.txt"
