@@ -98,7 +98,7 @@ runs:
 
     
     - name: Beautify comment message 🧨
-      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.format, 'standard') }}
+      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.output, 'standard') }}
       run: |
         echo """
         PII check result:
@@ -110,7 +110,7 @@ runs:
       shell: bash
 
     - name: Publish warnings as comment to pull request
-      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.format, 'standard') }}
+      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.output, 'standard') }}
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         header: "${{ inputs.path }}-${{ inputs.configuration-file }}-${{ inputs.output }}"
