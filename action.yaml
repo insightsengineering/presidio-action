@@ -81,19 +81,19 @@ runs:
       if: (inputs.configuration-data == '' && (inputs.configuration-file == 'default'|| inputs.configuration-file == 'limited'))
       run: |
         
-        presidio -f "${{ inputs.output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.path }}" | tee -a ./.presidio-output.txt
+        presidio -f "${{ inputs.output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
     - name: Run presidio with configuration file
       if: (inputs.configuration-data == '' && inputs.configuration-file != 'default' && inputs.configuration-file != 'limited')
       run: |
-        presidio -f "${{ inputs.output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.path }}" | tee -a ./.presidio-output.txt
+        presidio -f "${{ inputs.output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
     - name: Run presidio with configuration data
       if: (inputs.configuration-data != '')
       run: |
-        presidio -f "${{ inputs.output }}" -d "${{ inputs.configuration-data }}" "${{ inputs.path }}" | tee -a ./.presidio-output.txt
+        presidio -f "${{ inputs.output }}" -d "${{ inputs.configuration-data }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
     
@@ -103,9 +103,9 @@ runs:
         echo """
         PII check result:
 
-        ```
-        $(cat "./.presidio-output.txt")
-        ```
+        \`\`\`
+        $(cat ./.presidio-output.txt)
+        \`\`\`
         """ > ./.presidio-output-comment.txt
       shell: bash
 
