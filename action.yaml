@@ -101,7 +101,9 @@ runs:
       if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.output, 'standard') }}
       run: |
         echo """
-        PII check result:
+        ### PII Check
+        
+        Presidio found potential PII data in the following files:
 
         \`\`\`
         $(cat ./.presidio-output.txt)
