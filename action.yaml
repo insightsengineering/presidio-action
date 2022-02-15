@@ -97,7 +97,7 @@ runs:
       shell: bash
 
     
-    - name: Beautify comment message 🧨
+    - name: Beautify PR comment 🧨
       if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.output, 'standard') }}
       run: |
         echo """
