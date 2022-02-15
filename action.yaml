@@ -80,6 +80,7 @@ runs:
     - name: Run presidio with default configuration
       if: (inputs.configuration-data == '' && (inputs.configuration-file == 'default'|| inputs.configuration-file == 'limited'))
       run: |
+        
         presidio -f "${{ inputs.output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
@@ -95,23 +96,42 @@ runs:
         presidio -f "${{ inputs.output }}" -d "${{ inputs.configuration-data }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
       shell: bash
 
-    - name: Issues not found message
+    
+    - name: Beautify PR comment 🧨
+      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.output, 'standard') }}
       run: |
-        if [[ ! -s "./.presidio-output.txt" ]]; then
-          echo "There is nothing from presidio check" | tee -a "./.presidio-output.txt"
+        echo """
+        ### PII Check
+        """ | tee ./.presidio-output-comment.txt
+        if [[ ! -s ./.presidio-output.txt ]]; then
+          echo """
+          Based on configuration Presidio does not found potential PII data
+          """
+        else
+          echo """
+          <details><summary>Presidio found potential PII data in the following files:</summary>
+          <p>
+
+          \`\`\`
+          $(cat ./.presidio-output.txt)
+          \`\`\`
+          
+          </p></details>
+
+          """ | tee -a ./.presidio-output-comment.txt
         fi
       shell: bash
 
     - name: Publish warnings as comment to pull request
-      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') }}
+      if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.output, 'standard') }}
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         header: "${{ inputs.path }}-${{ inputs.configuration-file }}-${{ inputs.output }}"
-        path: ./.presidio-output.txt
+        path: "./.presidio-output-comment.txt"
 
     - name: Upload report 🔼
       if: ${{ github.event_name == 'pull_request' && contains(inputs.upload, 'true') }}
       uses: actions/upload-artifact@v2
       with:
-        name: "presidio-cli output in format ${{ inputs.output }}"
+        name: "PII output in format ${{ inputs.output }}"
         path: "./.presidio-output.txt"
