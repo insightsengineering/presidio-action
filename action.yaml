@@ -111,9 +111,11 @@ runs:
           echo """
           <details><summary>Presidio found potential PII data in the following files:</summary>
           <p>
+
           \`\`\`
           $(cat ./.presidio-output.txt)
           \`\`\`
+          
           </p></details>
 
           """ | tee -a ./.presidio-output-comment.txt
