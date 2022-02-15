@@ -120,5 +120,5 @@ runs:
       if: ${{ github.event_name == 'pull_request' && contains(inputs.upload, 'true') }}
       uses: actions/upload-artifact@v2
       with:
-        name: "presidio-cli output in format ${{ inputs.output }}"
+        name: "PII output in format ${{ inputs.output }}"
         path: "./.presidio-output.txt"
