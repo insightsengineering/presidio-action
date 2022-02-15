@@ -102,13 +102,22 @@ runs:
       run: |
         echo """
         ### PII Check
-        
-        Presidio found potential PII data in the following files:
+        """ | tee ./.presidio-output-comment.txt
+        if [[ ! -s ./.presidio-output.txt ]]; then
+          echo """
+          Based on configuration Presidio does not found potential PII data
+          """
+        else
+          echo """
+          <details><summary>Presidio found potential PII data in the following files:</summary>
+          <p>
+          \`\`\`
+          $(cat ./.presidio-output.txt)
+          \`\`\`
+          </p></details>
 
-        \`\`\`
-        $(cat ./.presidio-output.txt)
-        \`\`\`
-        """ > ./.presidio-output-comment.txt
+          """ | tee -a ./.presidio-output-comment.txt
+        fi
       shell: bash
 
     - name: Publish warnings as comment to pull request
