@@ -18,7 +18,7 @@ Insights Engineering
 
 * `configuration-file`:
 
-    _Description_: Path to configuration file or predefined configuration (default, limited)
+    _Description_: Path to custom configuration file or predefined configuration (default, limited)
 
     _Required_: `false`
 
@@ -26,7 +26,7 @@ Insights Engineering
 
 * `configuration-data`:
 
-    _Description_: Simple configuration data directly in yaml format
+    _Description_: Configuration data as an inline YAML configuration
 
     _Required_: `false`
 
@@ -34,7 +34,7 @@ Insights Engineering
 
 * `output`:
 
-    _Description_: Format of an output
+    _Description_: Format of output
 
     _Required_: `false`
 
@@ -42,7 +42,7 @@ Insights Engineering
 
 * `publish`:
 
-    _Description_: Publish result in PR comment
+    _Description_: Publish result as a PR comment
 
     _Required_: `false`
 
@@ -50,7 +50,7 @@ Insights Engineering
 
 * `upload`:
 
-    _Description_: Upload result as an artifact
+    _Description_: Upload results as an artifact
 
     _Required_: `false`
 
@@ -58,11 +58,27 @@ Insights Engineering
 
 * `presidio-cli-version`:
 
-    _Description_: Presidio cli version - a version of presidio-cli used in action.
+    _Description_: Presidio CLI version
 
     _Required_: `false`
 
-    _Default_: "1.0.0"
+    _Default_: "0.0.5"
+
+* `presidio-cli-version`:
+
+    _Description_: Presidio CLI version
+
+    _Required_: `false`
+
+    _Default_: "0.0.5"
+
+* `lang-models`:
+
+    _Description_: List of additional language models to install
+
+    _Required_: `false`
+
+    _Default_: ""
 
 ## Outputs
 

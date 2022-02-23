@@ -10,11 +10,11 @@ inputs:
     required: false
     default: "."
   configuration-file:
-    description: Path to configuration file or predefined configuration (default, limited)
+    description: Path to custom configuration file or predefined configuration (default, limited)
     required: false
     default: "default"
   configuration-data:
-    description: Simple configuration data directly
+    description: Configuration data as an inline YAML configuration
     required: false
     default: ""
   output:
@@ -22,20 +22,20 @@ inputs:
     required: false
     default: "auto"
   publish:
-    description: Publish result in PR comment
+    description: Publish result as a PR comment
     required: false
     default: "true"
   upload:
-    description: Uploads as artifact
+    description: Upload results as an artifact
     required: false
     default: "true"
   presidio-cli-version:
     description: Presidio CLI version
     required: false
-    default: "0.0.4"
+    default: "0.0.5"
   lang-models:
-    description: List of additional lang models to install
-    require: false
+    description: List of additional language models to install
+    required: false
     default: ""
 
 runs:
