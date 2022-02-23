@@ -117,4 +117,4 @@ jobs:
           configuration-data: ${{ matrix.reports.configuration-data }}
           output: ${{ matrix.reports.output }}
           lang-models: ${{ matrix.reports.lang-models }}
-          changed-files-only: ${{ matrix.reports.changed-files-only }}
+          only-changed-files: ${{ matrix.reports.changed-files-only }}
