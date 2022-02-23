@@ -91,7 +91,7 @@ runs:
       run: |
         CONFIG_OPTION=""
         
-        if [ "${{ inputs.configuration-data }} != "" ]
+        if [ "${{ inputs.configuration-data }}" != "" ]
         then {
           CONFIG_OPTION="-d ${{ inputs.configuration-data }}"
         }
@@ -108,14 +108,14 @@ runs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}
           do {
             presidio \
-              -f $file "${CONFIG_OPTION}" \
-              ${{ inputs.path }}" | tee ./.presidio-output.txt
+              -f "${{ inputs.output }}" "${CONFIG_OPTION}" \
+              $file | tee ./.presidio-output.txt
           }
           done
         } else {
           presidio \
             -f "${{ inputs.output }}" "${CONFIG_OPTION}" \
-            ${{ inputs.path }}" | tee ./.presidio-output.txt
+            "${{ inputs.path }}" | tee ./.presidio-output.txt
         }
         fi
       shell: bash
