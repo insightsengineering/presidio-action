@@ -62,15 +62,7 @@ Insights Engineering
 
     _Required_: `false`
 
-    _Default_: "0.0.5"
-
-* `presidio-cli-version`:
-
-    _Description_: Presidio CLI version
-
-    _Required_: `false`
-
-    _Default_: "0.0.5"
+    _Default_: "latest"
 
 * `lang-models`:
 

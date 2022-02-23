@@ -32,7 +32,7 @@ inputs:
   presidio-cli-version:
     description: Presidio CLI version
     required: false
-    default: "0.0.5"
+    default: "latest"
   lang-models:
     description: List of additional language models to install
     required: false
@@ -55,9 +55,15 @@ runs:
         key: ${{ runner.os }}-presidio-cli-${{ inputs.presidio-cli-version }}-main
 
     - name: Install presidio-cli
-      uses: BSFishy/pip-action@v1
-      with:
-        packages: presidio-cli==${{ inputs.presidio-cli-version }}
+      run: |
+        if [ "${{ inputs.presidio-cli-version }}" == "latest" ]
+        then {
+          pip install --upgrade presidio-cli
+        } else {
+          pip install presidio-cli==${{ inputs.presidio-cli-version }}
+        }
+        fi
+      shell: bash
 
     - name: Get branch names
       id: branch-names
