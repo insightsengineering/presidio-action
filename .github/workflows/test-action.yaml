@@ -65,6 +65,7 @@ jobs:
           - path: "3_types.txt"
             configuration-file: ""
             configuration-data: |2
+              language: en
               entities:
                 - PERSON
             output: "auto"
@@ -82,7 +83,7 @@ jobs:
             lang-models: ""
             changed-files-only: false
           - path: "fake_no.txt"
-            configuration-file: "none"
+            configuration-file: ""
             configuration-data: |2
               language: en
               entities:
