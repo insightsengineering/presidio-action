@@ -18,7 +18,7 @@ Insights Engineering
 
 * `configuration-file`:
 
-    _Description_: Path to custom configuration file or predefined configuration (default, limited)
+    _Description_: Path to custom configuration file
 
     _Required_: `false`
 
@@ -71,6 +71,14 @@ Insights Engineering
     _Required_: `false`
 
     _Default_: ""
+
+* `only-changed-files`:
+
+    _Description_: Only run checks for changed files
+
+    _Required_: `false`
+
+    _Default_: `true`
 
 ## Outputs
 
@@ -142,6 +150,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # This is needed if you set `only-changed-files` to true
 
       - name: Produce the presidio report
         uses: insightsengineering/presidio-action@v1
@@ -166,5 +176,9 @@ jobs:
               - PERSON
           # output - specify one of output formats
           output: "parsable"
+          # only-changed-files - only run the check for files that were changed
+          # NOTE: You must set fetch-depth: 0 in the actions/checkout@v2 step
+          # for push events while this paramater is set to true
+          only-changed-files: true
 
 ```
