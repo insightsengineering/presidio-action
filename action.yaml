@@ -89,17 +89,17 @@ runs:
 
     - name: Run presidio
       run: |
-        CONFIG_OPTION=""
-        
+        CONFIG_FILE_OPTION=""
+        CONFIG_DATA_OPTION=""
         if [ "${{ inputs.configuration-data }}" != "" ]
         then {
-          CONFIG_OPTION="-d ${{ inputs.configuration-data }}"
+          CONFIG_DATA_OPTION="-d ${{ inputs.configuration-data }}"
         }
         fi
 
         if [ "${{ inputs.configuration-file }}" != "" ]
         then {
-          CONFIG_OPTION="-c ${{ inputs.configuration-file }}"
+          CONFIG_FILE_OPTION="-c ${{ inputs.configuration-file }}"
         }
         fi
 
@@ -108,14 +108,14 @@ runs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}
           do {
             presidio \
-              -f "${{ inputs.output }}" $CONFIG_OPTION \
+              -f ${{ inputs.output }} $CONFIG_FILE_OPTION "${CONFIG_DATA_OPTION}" \
               $file | tee ./.presidio-output.txt
           }
           done
         } else {
           presidio \
-            -f "${{ inputs.output }}" $CONFIG_OPTION \
-            "${{ inputs.path }}" | tee ./.presidio-output.txt
+            -f ${{ inputs.output }} $CONFIG_OPTION "${CONFIG_DATA_OPTION}" \
+            ${{ inputs.path }} | tee ./.presidio-output.txt
         }
         fi
       shell: bash
