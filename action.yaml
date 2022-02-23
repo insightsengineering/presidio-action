@@ -89,17 +89,17 @@ runs:
 
     - name: Run presidio
       run: |
-        CONFIG_FILE_OPTION=""
-        CONFIG_DATA_OPTION=""
+        CONFIG_OPTION=""
         if [ "${{ inputs.configuration-data }}" != "" ]
         then {
-          CONFIG_DATA_OPTION="-d ${{ inputs.configuration-data }}"
+          echo "${{ inputs.configuration-data }}" > /tmp/inline.yml
+          CONFIG_OPTION="-d /tmp/inline.yml"
         }
         fi
 
         if [ "${{ inputs.configuration-file }}" != "" ]
         then {
-          CONFIG_FILE_OPTION="-c ${{ inputs.configuration-file }}"
+          CONFIG_OPTION="-c ${{ inputs.configuration-file }}"
         }
         fi
 
@@ -108,13 +108,13 @@ runs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}
           do {
             presidio \
-              -f ${{ inputs.output }} $CONFIG_FILE_OPTION "${CONFIG_DATA_OPTION}" \
+              -f ${{ inputs.output }} $CONFIG_OPTION \
               $file | tee ./.presidio-output.txt
           }
           done
         } else {
           presidio \
-            -f ${{ inputs.output }} $CONFIG_OPTION "${CONFIG_DATA_OPTION}" \
+            -f ${{ inputs.output }} $CONFIG_OPTION \
             ${{ inputs.path }} | tee ./.presidio-output.txt
         }
         fi
