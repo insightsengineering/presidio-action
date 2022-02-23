@@ -22,46 +22,55 @@ jobs:
             configuration-data: ""
             output: "auto"
             lang-models: ""
+            changed-files-only: false
           - path: "./fixtures/fake_no.txt"
             configuration-file: ""
             configuration-data: ""
             output: "auto"
             lang-models: ""
+            changed-files-only: false
           - path: "./fixtures/3_types.txt"
             configuration-file: ""
             configuration-data: ""
             output: "auto"
             lang-models: ""
+            changed-files-only: false
           - path: "./fixtures/nothing.txt"
             configuration-file: "./fixtures/custom.yaml"
             configuration-data: ""
             output: "auto"
             lang-models: ""
+            changed-files-only: false
           - path: "./fixtures/fake_no.txt"
             configuration-file: "./fixtures/custom.yaml"
             configuration-data: ""
             output: "auto"
             lang-models: ""
+            changed-files-only: false
           - path: "./fixtures/3_types.txt"
             configuration-file: "./fixtures/custom.yaml"
             configuration-data: ""
             output: "standard"
             lang-models: ""
+            changed-files-only: false
           - path: "./fixtures/3_types.txt"
             configuration-file: "./fixtures/custom.yaml"
             configuration-data: ""
             output: "github"
             lang-models: ""
+            changed-files-only: false
           - path: "./fixtures/3_types.txt"
             configuration-file: "./fixtures/custom.yaml"
             configuration-data: ""
             output: "colored"
             lang-models: ""
+            changed-files-only: false
           - path: "./fixtures/3_types.txt"
             configuration-file: "./fixtures/custom.yaml"
             configuration-data: ""
             output: "parsable"
             lang-models: ""
+            changed-files-only: false
           - path: "./fixtures/3_types.txt"
             configuration-file: ""
             configuration-data: |2
@@ -70,6 +79,7 @@ jobs:
                 - PERSON
             output: "auto"
             lang-models: ""
+            changed-files-only: false
           - path: "."
             configuration-file: "./fixtures/custom.yaml"
             configuration-data: ""
@@ -93,6 +103,7 @@ jobs:
             lang-models: |
               pl_core_news_sm
               pl_core_news_lg
+            changed-files-only: false
 
     steps:
       - name: Checkout repo
@@ -106,3 +117,4 @@ jobs:
           configuration-data: ${{ matrix.reports.configuration-data }}
           output: ${{ matrix.reports.output }}
           lang-models: ${{ matrix.reports.lang-models }}
+          changed-files-only: ${{ matrix.reports.changed-files-only }}
