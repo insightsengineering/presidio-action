@@ -18,7 +18,7 @@ Insights Engineering
 
 * `configuration-file`:
 
-    _Description_: Path to custom configuration file or predefined configuration (default, limited)
+    _Description_: Path to custom configuration file
 
     _Required_: `false`
 
@@ -71,6 +71,14 @@ Insights Engineering
     _Required_: `false`
 
     _Default_: ""
+
+* `only-changed-files`:
+
+    _Description_: Only run checks for changed files
+
+    _Required_: `false`
+
+    _Default_: `true`
 
 ## Outputs
 

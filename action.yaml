@@ -10,9 +10,9 @@ inputs:
     required: false
     default: "."
   configuration-file:
-    description: Path to custom configuration file or predefined configuration (default, limited)
+    description: Path to custom configuration file
     required: false
-    default: "default"
+    default: ""
   configuration-data:
     description: Configuration data as an inline YAML configuration
     required: false
@@ -37,6 +37,10 @@ inputs:
     description: List of additional language models to install
     required: false
     default: ""
+  only-changed-files:
+    description: Only run checks for changed files
+    required: false
+    default: true
 
 runs:
   using: composite
@@ -65,9 +69,9 @@ runs:
         fi
       shell: bash
 
-    - name: Get branch names
-      id: branch-names
-      uses: tj-actions/branch-names@v5.1
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v17
 
     - name: Install en language models
       run: |
@@ -83,25 +87,38 @@ runs:
         done <<< "${{ inputs.lang-models }}"
       shell: bash
 
-    - name: Run presidio with default configuration
-      if: (inputs.configuration-data == '' && (inputs.configuration-file == 'default'|| inputs.configuration-file == 'limited'))
+    - name: Run presidio
       run: |
+        CONFIG_OPTION=""
         
-        presidio -f "${{ inputs.output }}" -c "${GITHUB_ACTION_PATH}/conf/${{ inputs.configuration-file }}.yaml" "${{ inputs.path }}" | tee ./.presidio-output.txt
-      shell: bash
+        if [ "${{ inputs.configuration-data }} != "" ]
+        then {
+          CONFIG_OPTION="-d ${{ inputs.configuration-data }}"
+        }
+        fi
 
-    - name: Run presidio with configuration file
-      if: (inputs.configuration-data == '' && inputs.configuration-file != 'default' && inputs.configuration-file != 'limited')
-      run: |
-        presidio -f "${{ inputs.output }}" -c "${{ inputs.configuration-file }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
-      shell: bash
+        if [ "${{ inputs.configuration-file }}" != "" ]
+        then {
+          CONFIG_OPTION="-c ${{ inputs.configuration-file }}"
+        }
+        fi
 
-    - name: Run presidio with configuration data
-      if: (inputs.configuration-data != '')
-      run: |
-        presidio -f "${{ inputs.output }}" -d "${{ inputs.configuration-data }}" "${{ inputs.path }}" | tee ./.presidio-output.txt
+        if [ "${{ inputs.only-changed-files }}" == "true" ]
+        then {
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}
+          do {
+            presidio \
+              -f $file "${CONFIG_OPTION}" \
+              ${{ inputs.path }}" | tee ./.presidio-output.txt
+          }
+          done
+        } else {
+          presidio \
+            -f "${{ inputs.output }}" "${CONFIG_OPTION}" \
+            ${{ inputs.path }}" | tee ./.presidio-output.txt
+        }
+        fi
       shell: bash
-
     
     - name: Beautify PR comment 🧨
       if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.output, 'standard') }}
