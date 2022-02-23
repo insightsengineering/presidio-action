@@ -78,7 +78,7 @@ Insights Engineering
 
     _Required_: `false`
 
-    _Default_: `true`
+    _Default_: `false`
 
 ## Outputs
 

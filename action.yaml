@@ -40,7 +40,7 @@ inputs:
   only-changed-files:
     description: Only run checks for changed files
     required: false
-    default: true
+    default: false
 
 runs:
   using: composite
