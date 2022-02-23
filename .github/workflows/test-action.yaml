@@ -74,6 +74,13 @@ jobs:
             configuration-data: ""
             output: "github"
             lang-models: ""
+            changed-files-only: true
+          - path: "."
+            configuration-file: "custom.yaml"
+            configuration-data: ""
+            output: "github"
+            lang-models: ""
+            changed-files-only: false
           - path: "fake_no.txt"
             configuration-file: "none"
             configuration-data: |2

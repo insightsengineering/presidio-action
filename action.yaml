@@ -103,7 +103,7 @@ runs:
         }
         fi
 
-        if [ "${{ inputs.only-changed-files }}" == "true" ]
+        if [[ "${{ inputs.only-changed-files }}" == "true" && "${{ inputs.path }}" == "." ]]
         then {
           for file in ${{ steps.changed-files.outputs.all_changed_files }}
           do {
