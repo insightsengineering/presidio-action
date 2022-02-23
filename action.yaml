@@ -62,9 +62,9 @@ runs:
       run: |
         if [ "${{ inputs.presidio-cli-version }}" == "latest" ]
         then {
-          pip install --upgrade presidio-cli
+          pip -q install --upgrade presidio-cli
         } else {
-          pip install presidio-cli==${{ inputs.presidio-cli-version }}
+          pip -q install presidio-cli==${{ inputs.presidio-cli-version }}
         }
         fi
       shell: bash
