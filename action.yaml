@@ -108,13 +108,13 @@ runs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}
           do {
             presidio \
-              -f "${{ inputs.output }}" "${CONFIG_OPTION}" \
+              -f "${{ inputs.output }}" $CONFIG_OPTION \
               $file | tee ./.presidio-output.txt
           }
           done
         } else {
           presidio \
-            -f "${{ inputs.output }}" "${CONFIG_OPTION}" \
+            -f "${{ inputs.output }}" $CONFIG_OPTION \
             "${{ inputs.path }}" | tee ./.presidio-output.txt
         }
         fi
