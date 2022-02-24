@@ -71,6 +71,7 @@ runs:
 
     - name: Get changed files
       id: changed-files
+      if: contains(inputs.only-changed-files, 'true')
       uses: tj-actions/changed-files@v17
 
     - name: Install en language models

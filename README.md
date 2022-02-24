@@ -151,7 +151,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0 # This is needed if you set `only-changed-files` to true
+          # 0 fetch-depth is needed if you set `only-changed-files` to true
+          # and if you are configuring this check to run on push events
+          fetch-depth: 0
 
       - name: Produce the presidio report
         uses: insightsengineering/presidio-action@v1
