@@ -1,6 +1,6 @@
 # Presidio Action
 
-Github Actions that analyze Text for PII Entities with Microsoft Presidio framework.
+Github Action that analyzes text for PII entities with [Microsoft's Presidio framework](https://microsoft.github.io/presidio/).
 
 ## Author
 
