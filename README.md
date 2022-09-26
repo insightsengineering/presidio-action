@@ -100,8 +100,8 @@ tests/conftest.py
 
 ```shell
 ::group::tests/conftest.py
-::0.85 file=tests/conftest.py,line=34,col=58::34:58 [PERSON] 
-::0.85 file=tests/conftest.py,line=37,col=33::37:33 [PERSON] 
+::0.85 file=tests/conftest.py,line=34,col=58::34:58 [PERSON]
+::0.85 file=tests/conftest.py,line=37,col=33::37:33 [PERSON]
 ::endgroup::
 ```
 
@@ -164,10 +164,10 @@ jobs:
           # '.' - current folder is a default value
           path: "my-project"
           # configuration-file - path to file with specific configuration
-          # or use one of predefined files: 
-          #   - default - `conf/default.yaml` file from action, check default list of entities
+          # or use one of predefined files:
+          #   - default - `conf/default.yaml` file from action repository, check default list of entities
           #                and ignore content of `.git` folder
-          #   - limited - `conf/limited.yaml` file from action, check only PERSON, EMAIL_ADDRESS and CREDIT_CARD
+          #   - limited - `conf/limited.yaml` file from action repository, check only PERSON, EMAIL_ADDRESS and CREDIT_CARD
           #                and ignore `.git` folder and *.cfg files
           configuration-file: "my-project/conf/my-presidio-config.yaml"
           # configuration-data - content of configuration in raw yaml format.
@@ -176,6 +176,7 @@ jobs:
           configuration-data: |
             entities:
               - PERSON
+            threshold: 0.9
           # output - specify one of output formats
           output: "parsable"
           # only-changed-files - only run the check for files that were changed
@@ -184,3 +185,7 @@ jobs:
           only-changed-files: true
 
 ```
+
+Example of comment added to the PR:
+
+![Screenshot with PR comment example](example.png)
