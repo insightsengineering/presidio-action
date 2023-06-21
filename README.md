@@ -149,7 +149,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           # 0 fetch-depth is needed if you set `only-changed-files` to true
           # and if you are configuring this check to run on push events
@@ -180,7 +180,7 @@ jobs:
           # output - specify one of output formats
           output: "parsable"
           # only-changed-files - only run the check for files that were changed
-          # NOTE: You must set fetch-depth: 0 in the actions/checkout@v2 step
+          # NOTE: You must set fetch-depth: 0 in the actions/checkout@v3 step
           # for push events while this paramater is set to true
           only-changed-files: true
 
