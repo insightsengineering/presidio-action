@@ -46,12 +46,12 @@ runs:
   using: composite
   steps:
     - name: Setup Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@e9aba2c848f5ebd159c070c61ea2c4e2b122355e # v2
       with:
         python-version: '3.10'
 
     - name: cache 
-      uses: actions/cache@v2
+      uses: actions/cache@8492260343ad570701412c2f464a5877dc76bace # v2
       with:
         path: |
           '~/.cache/pip'
@@ -149,14 +149,14 @@ runs:
 
     - name: Publish warnings as comment to pull request
       if: ${{ github.event_name == 'pull_request' && contains(inputs.publish, 'true') &&  contains(inputs.output, 'standard') }}
-      uses: marocchino/sticky-pull-request-comment@v2
+      uses: marocchino/sticky-pull-request-comment@773744901bac0e8cbb5a0dc842800d45e9b2b405 # v2
       with:
         header: "${{ inputs.path }}-${{ inputs.configuration-file }}-${{ inputs.output }}"
         path: "./.presidio-output-comment.txt"
 
     - name: Upload report 🔼
       if: ${{ github.event_name == 'pull_request' && contains(inputs.upload, 'true') }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2 # v2
       with:
         name: "PII output in format ${{ inputs.output }}"
         path: "./.presidio-output.txt"
